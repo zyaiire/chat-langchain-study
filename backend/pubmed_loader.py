@@ -10,8 +10,8 @@ import time
 def load_pubmed_docs(
         query: str,
         max_results: int = 1000, 
-        email: str = None
-        page_size: int = 100
+        email: str = None,
+        page_size: int = 100,
         fetch_batch_size: int = 200
         ) -> List[Document]:
     """
