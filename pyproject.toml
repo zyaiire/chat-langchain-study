@@ -29,6 +29,7 @@ cohere = "4.45"
 auth = "^0.5.3"
 python-dotenv = "^1.1.1"
 biopython = "^1.85"
+pandas = "^2.3.2"
 
 
 [tool.poetry.group.lint.dependencies]
