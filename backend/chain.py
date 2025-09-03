@@ -2,6 +2,9 @@ import os
 from operator import itemgetter
 from typing import Dict, List, Optional, Sequence
 
+from dotenv import load_dotenv
+load_dotenv()  # 加载 .env 文件中的环境变量
+
 import weaviate
 from constants import WEAVIATE_DOCS_INDEX_NAME
 from fastapi import FastAPI
@@ -125,7 +128,7 @@ class ChatRequest(BaseModel):
     question: str
     chat_history: Optional[List[Dict[str, str]]]
 
-
+# 封装 weaviate客户端启动
 def get_retriever() -> BaseRetriever:
     weaviate_client = weaviate.Client(
         url=WEAVIATE_URL,
@@ -133,11 +136,11 @@ def get_retriever() -> BaseRetriever:
     )
     weaviate_client = Weaviate(
         client=weaviate_client,
-        index_name=WEAVIATE_DOCS_INDEX_NAME,
-        text_key="text",
-        embedding=get_embeddings_model(),
-        by_text=False,
-        attributes=["source", "title"],
+        index_name=WEAVIATE_DOCS_INDEX_NAME, # 指定Weavi索引名称
+        text_key="text", # 指定储存文件的字段名称
+        embedding=get_embeddings_model(), # 指定嵌入模型
+        by_text=False, 
+        attributes=["source", "title"], # 指定文档的元数据
     )
     return weaviate_client.as_retriever(search_kwargs=dict(k=6))
 

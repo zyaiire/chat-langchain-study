@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat-Langchain-Study 项目架构图</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 32px; }
+        h1 { text-align: center; margin-bottom: 32px; }
+        .layer { margin-bottom: 24px; }
+        .layer-title { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; color: #2d7ff9; }
+        .layer-box { background: #eaf3ff; border-left: 6px solid #2d7ff9; border-radius: 8px; padding: 16px 24px; margin-bottom: 8px; }
+        .layer-desc { color: #555; margin-bottom: 8px; }
+        .arrow { text-align: center; font-size: 2em; color: #bbb; margin-bottom: 8px; }
+        .tech-list { margin: 0; padding: 0 0 0 16px; }
+        .tech-list li { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat-Langchain-Study 项目架构图</h1>
+        <div class="layer">
+            <div class="layer-title">前端 UI 层</div>
+            <div class="layer-box">
+                <div class="layer-desc">Next.js + React + TailwindCSS 实现网页界面，用户输入、展示对话结果。</div>
+                <ul class="tech-list">
+                    <li>HTML / CSS / JavaScript / 图片资源</li>
+                    <li>Next.js 页面与组件</li>
+                </ul>
+            </div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer">
+            <div class="layer-title">接口交互层</div>
+            <div class="layer-box">
+                <div class="layer-desc">前端通过 HTTP 请求（POST/GET）与 FastAPI 后端交互，发送问题、反馈、获取 trace 链接。</div>
+                <ul class="tech-list">
+                    <li>API 路由：/chat, /feedback, /get_trace</li>
+                    <li>Pydantic 定义数据结构（如 ChatRequest, SendFeedbackBody）</li>
+                </ul>
+            </div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer">
+            <div class="layer-title">业务逻辑层</div>
+            <div class="layer-box">
+                <div class="layer-desc">FastAPI 负责路由分发，调用 LangChain、LangSmith、Weaviate 等 AI 组件，处理对话、反馈、溯源。</div>
+                <ul class="tech-list">
+                    <li>FastAPI 框架</li>
+                    <li>LangChain 对话链路（chain.py）</li>
+                    <li>LangSmith 客户端（trace、反馈）</li>
+                </ul>
+            </div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer">
+            <div class="layer-title">数据存储层</div>
+            <div class="layer-box">
+                <div class="layer-desc">嵌入数据、文档、反馈等存储于数据库和向量库，支持去重、检索。</div>
+                <ul class="tech-list">
+                    <li>SQLRecordManager（ORM，支持 SQLite/Supabase/Postgres）</li>
+                    <li>Weaviate（向量数据库）</li>
+                </ul>
+            </div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer">
+            <div class="layer-title">服务运行层</div>
+            <div class="layer-box">
+                <div class="layer-desc">Uvicorn 启动 FastAPI 服务，支持本地或 Docker 部署。</div>
+                <ul class="tech-list">
+                    <li>Uvicorn</li>
+                    <li>Docker（可选）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
