@@ -35,10 +35,10 @@ def load_pubmed_docs(
     Entrez.email = email
     #MY_WAY -1.Esearch分页收集PMID
     all_ids: List[str] = []
-    retstar = 0
-    while len(all_id) < max_results:
+    retstart = 0
+    while len(all_ids) < max_results:
         retmax = min(page_size,max_results - len(all_ids))
-        handle = Entrez.esearch(db="pubmed", term=query, retmax=retmax, retstar=retstar)
+        handle = Entrez.esearch(db="pubmed", term=query, retmax=retmax, retstar=retstart)
         search = Entrez.read(handle)
         handle.close()
 
@@ -49,7 +49,7 @@ def load_pubmed_docs(
         # 若本页返回不足retmax，说明已经到末尾
         if len(ids) < retmax:
             break
-        retstart += retstar
+        retstart += retstart
         time.sleep(0.34)
     # 搜索 PubMed
     handle = Entrez.esearch(db="pubmed", term=query, retmax=max_results)
