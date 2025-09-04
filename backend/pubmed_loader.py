@@ -38,7 +38,7 @@ def load_pubmed_docs(
     retstart = 0
     while len(all_ids) < max_results:
         retmax = min(page_size,max_results - len(all_ids))
-        handle = Entrez.esearch(db="pubmed", term=query, retmax=retmax, retstar=retstart)
+        handle = Entrez.esearch(db="pubmed", term=query, retmax=retmax, retstart=retstart)
         search = Entrez.read(handle)
         handle.close()
 
@@ -71,7 +71,7 @@ def load_pubmed_docs(
         title = article.get("ArticleTitle", "")
         abstract = article.get("Abstract", {}).get("AbstractText", [""])[0]
         authors = [
-            author["LastName"] + " " + author.get("ForeName", "")
+            author.get("LastName","") + " " + author.get("ForeName", "")
             for author in article.get("AuthorList", [])
         ] if "AuthorList" in article else []
         
